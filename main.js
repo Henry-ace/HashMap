@@ -17,16 +17,13 @@ const hashMap = () => {
       hashcode = hashcode % capacity
     }
     
-    console.log(key, hashcode)
-    
     return hashcode
   }
   
   const setter = (key, value) => {
     
     if (size >= capacity * loadFactor) {
-       console.log('bucket is full')
-       return
+       return 'bucket is full'
     }else {
       size++
     }
@@ -58,31 +55,71 @@ const hashMap = () => {
     let current = array[index]
     
     if(!current) {
+      return 'key not found'
+      
+    }
+    
+    while(current) {
+      if(current.key === key) {
+        return current.value
+      }
+        current = current.next
+      }
+    
+    return 'key not found'
+  }
+  
+  
+  const has = (key) => {
+    const index = hash(key)
+    let current = array[index]
+    
+     if(!current) {
       console.log('key not found')
       return
     }
     
     while(current) {
       if(current.key === key) {
-        console.log(current.value)
-        return
+        return true
       }
         current = current.next
       }
     
-    console.log('key not found')
+    return false
   }
   
+const remove = (key) => {
+  const index = hash(key)
+  let current = array[index]
   
+  if (!current) {
+    return 'key does not exist'
+  }
+  
+  if (current.key === key) {
+    array[index] = current.next
+    return
+  }
+  
+  while (current.next) {
+    if (current.next.key === key) {
+      current.next = current.next.next
+      return
+    }
+    current = current.next
+  }
+  
+  return 'key does not exist'
+}
   
   const displayArray = () => {
     console.log(array)
   }
   
   
-  return {hash, setter, displayArray, getter}
+  return {hash, setter, displayArray, getter, has, remove}
 }
-
 
 const map = hashMap()
 
@@ -92,7 +129,12 @@ map.setter('chuckwuebuka', '40')
 map.setter('promise','onoja')
 map.setter('praise','123')
 map.setter('god','1M')
-map.setter('dog','8')
+map.setter('dog', '8')
+map.setter('ace','16')
+map.setter('dad', '50')
+map.setter('ebb', '3')
 
-map.getter('promise')
+map.remove('ebb')
+
 map.displayArray()
+
