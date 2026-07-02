@@ -112,13 +112,34 @@ const remove = (key) => {
   
   return 'key does not exist'
 }
+  const length = () => {
+    let count = 0
+    let length = 0
+    
+    
+    while(count <= array.length) {
+      if(array[count]) {
+        length++
+        let current = array[count]
+        while(current.next) {
+          length++
+          current = current.next
+        }
+      }
+      count++
+    }
+  
+    
+    return length
+    
+  }
   
   const displayArray = () => {
     console.log(array)
   }
   
   
-  return {hash, setter, displayArray, getter, has, remove}
+  return {hash, setter, displayArray, getter, has, remove, length}
 }
 
 const map = hashMap()
@@ -133,8 +154,12 @@ map.setter('dog', '8')
 map.setter('ace','16')
 map.setter('dad', '50')
 map.setter('ebb', '3')
-
 map.remove('ebb')
+map.remove('henry')
+map.remove('dog')
+map.setter('phillip', '15')
 
+
+console.log(map.length())
 map.displayArray()
 
