@@ -99,16 +99,19 @@ const remove = (key) => {
   
   if (current.key === key) {
     array[index] = current.next
+    size--
     return
   }
   
   while (current.next) {
     if (current.next.key === key) {
       current.next = current.next.next
+      size--
       return
     }
     current = current.next
   }
+  
   
   return 'key does not exist'
 }
@@ -117,7 +120,7 @@ const remove = (key) => {
     let length = 0
     
     
-    while(count <= array.length) {
+    while(count < array.length) {
       if(array[count]) {
         length++
         let current = array[count]
@@ -134,12 +137,82 @@ const remove = (key) => {
     
   }
   
-  const displayArray = () => {
-    console.log(array)
+  const clear = () => {
+    let count = 0
+    
+    while(count < array.length) {
+        array[count] = null
+        size = 0
+      count++
+    }
   }
   
+  const keys = () => {
+    const keysArray = []
+    let count = 0
+    
+    
+    while(count < array.length) {
+      if(array[count]) {
+        let current = array[count]
+        while(current) {
+          keysArray.push(current.key)
+          current = current.next
+        }
+      }
+      
+      count++
+    }
+    
+    return keysArray
+  }
   
-  return {hash, setter, displayArray, getter, has, remove, length}
+    const values = () => {
+    const valuesArray = []
+    let count = 0
+    
+    
+    while(count < array.length) {
+      if(array[count]) {
+        let current = array[count]
+        while(current) {
+          valuesArray.push(current.value)
+          current = current.next
+        }
+      }
+      
+      count++
+    }
+    
+    return valuesArray
+  }
+  
+  const entries = () => {
+    const entriesArray = []
+    let count = 0
+    
+    
+    while (count < array.length) {
+      if (array[count]) {
+        let current = array[count]
+        while (current) {
+          entriesArray.push([current.key, current.value])
+          current = current.next
+        }
+      }
+      
+      count++
+    }
+    
+    return entriesArray
+  }
+  
+const displayArray = () => {
+    return array
+}
+  
+  
+  return {hash, setter, displayArray, getter, has, remove, length, clear, keys, values, entries}
 }
 
 const map = hashMap()
@@ -154,12 +227,11 @@ map.setter('dog', '8')
 map.setter('ace','16')
 map.setter('dad', '50')
 map.setter('ebb', '3')
-map.remove('ebb')
-map.remove('henry')
-map.remove('dog')
 map.setter('phillip', '15')
 
 
-console.log(map.length())
-map.displayArray()
+console.log(map.entries())
+console.log(map.values())
+console.log(map.keys())
+console.log(map.displayArray())
 
